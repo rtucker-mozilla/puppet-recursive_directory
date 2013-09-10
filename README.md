@@ -47,7 +47,8 @@ parameter documentation
 
 >The file mode for all of the directories
 >**required: false**  
->**defaut: 0700**
+>**defaut: 0700**  
+
 **owner**
    
 >The owner of the file  
