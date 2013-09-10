@@ -189,7 +189,7 @@ describe 'recursive_directory' do
         end
 
     end
-    context 'testdir should have_index.conf file' do
+    context 'testdir should have_nested/index.conf file' do
         let(:title) { 'example_test' }
         let(:facts) { { 
             :fqdn => 'testhost.localdomain',
