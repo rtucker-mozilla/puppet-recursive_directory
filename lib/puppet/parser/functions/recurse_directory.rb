@@ -82,8 +82,10 @@ module Puppet::Parser::Functions
             'content' => template_content,
             'owner' => file_owner,
             'group' => file_group,
-            'mode' => file_mode,
         }
+        if file_mode
+            creatable_resources[destination_full_path]['mode'] = file_mode
+        end
 
     end
     debug("Source Dir #{source_dir}")
