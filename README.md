@@ -15,7 +15,7 @@ recursive_directory {'some_unique_title':
       dest_dir  => '/tmp',
       file_mode  => '0644',
       owner      => 'root',
-      group      => 'root
+      group      => 'root'
 }
 ```
 > This will copy all files from <module_path>custom_module/templates/source_dir folder
