@@ -54,8 +54,6 @@ module Puppet::Parser::Functions
 
     moduledir = Puppet[:modulepath].split(/:/)[0]
     file_path = "#{moduledir}/#{search_path}"
-    glob_path = "#{file_path}/*"
-    files_found = Dir.glob(glob_path)
     Find.find(file_path) do |f|
         full_path = f
         f.slice!(file_path + "/")
@@ -106,7 +104,6 @@ module Puppet::Parser::Functions
     debug("Destination Dir #{destination_dir}")
     debug("Module Dir #{moduledir}")
     debug("File Path #{file_path}")
-    debug("Files Found #{files_found}")
     debug("Creatable Resources #{creatable_resources}")
     return creatable_resources
     end
