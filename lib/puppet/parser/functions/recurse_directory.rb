@@ -1,7 +1,32 @@
 require 'puppet'
 
 module Puppet::Parser::Functions
-    debug_mode = true
+    # expects an args containing:
+    # args[0] 
+    # - The source module and directory inside of templates
+    # - We will insert templates/ after the module name in this code
+    # - required: true
+    #
+    # args[1]
+    # - The destination directory for the interpolated templates to
+    # - go on the client machine
+    # - required: true
+    #
+    # args[2]
+    # - The file mode for the finished files on the client
+    # - required: false
+    # - default: 0600
+    #
+    # args[3]
+    # - The owner of the file
+    # - required: false
+    # - default: nobody
+    #
+    # args[4]
+    # - The group ownership of the file
+    # - required: false
+    # - default: nobody
+    #
     newfunction(:recurse_directory, :type => :rvalue) do |args|
     source_dir = args[0]
     destination_dir = args[1]
@@ -20,6 +45,9 @@ module Puppet::Parser::Functions
     creatable_resources = Hash.new
     source_dir_array = source_dir.split(/\//)
     template_path = source_dir_array[0]
+    #
+    # insert /templates to the modulename as our base search path
+    #
     source_dir_array[0] = "#{source_dir_array[0]}/templates"
     search_path = source_dir_array.join('/')
 
@@ -32,10 +60,8 @@ module Puppet::Parser::Functions
             next
         end
         title = f.gsub(/\.erb$/,'')
-        if debug_mode
-            notice("File in loop #{f}")
-            notice("Title in loop #{title}")
-        end
+        debug("File in loop #{f}")
+        debug("Title in loop #{title}")
         destination_full_path = "#{destination_dir}/#{title}"
         file = "#{template_path}/#{f}"
         debug "Retrieving template #{file}"
@@ -60,14 +86,12 @@ module Puppet::Parser::Functions
         }
 
     end
-    if debug_mode
-        notice("Source Dir #{source_dir}")
-        notice("Destination Dir #{destination_dir}")
-        notice("Module Dir #{moduledir}")
-        notice("File Path #{file_path}")
-        notice("Files Found #{files_found}")
-        notice("Creatable Resources #{creatable_resources}")
-    end
+    debug("Source Dir #{source_dir}")
+    debug("Destination Dir #{destination_dir}")
+    debug("Module Dir #{moduledir}")
+    debug("File Path #{file_path}")
+    debug("Files Found #{files_found}")
+    debug("Creatable Resources #{creatable_resources}")
     return creatable_resources
     end
 
