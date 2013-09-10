@@ -12,8 +12,9 @@ usage
 ```
 recursive_directory {'some_unique_title':
       source_dir => 'custom_module/source_dir',
-      dest_dir  => '/tmp',
+      dest_dir   => '/tmp',
       file_mode  => '0644',
+      dir_mode   => '0700',
       owner      => 'root',
       group      => 'root'
 }
@@ -45,7 +46,7 @@ parameter documentation
     
 **dir_mode**  
 
->The file mode for all of the directories
+>The file mode for all of the directories that get created by the module
 >**required: false**  
 >**defaut: 0700**  
 
