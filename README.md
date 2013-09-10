@@ -12,7 +12,7 @@ usage
 ```
 recursive_directory {'some_unique_title':
       source_dir => 'custom_module/source_dir',
-      final_dir  => '/tmp',
+      dest_dir  => '/tmp',
       file_mode  => '0644',
       owner      => 'root',
       group      => 'root
@@ -31,7 +31,7 @@ parameter documentation
 >create file resources for all files in <module_name>  
 >**required: true**
     
-**final_dir**  
+**dest_dir**  
 
 >The fully qualified path on the client system where the interpolated templates and files
 >should be created  
