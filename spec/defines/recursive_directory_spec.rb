@@ -163,4 +163,56 @@ describe 'recursive_directory' do
         end
 
     end
+
+    context 'testdir should have_additional_nested folder called nested' do
+        let(:title) { 'example_test' }
+        let(:facts) { { 
+            :fqdn => 'testhost.localdomain',
+            :custom_fake_fact => 'this_is_fake'
+        } }
+        let(:params) {
+            {   
+                :source_dir => 'recursive_directory',
+                :dest_dir => '/tmp/dest_dir',
+                :owner => 'root',
+                :group => 'root',
+                :file_mode  => '0600'
+            }
+        }
+
+        it do
+            should contain_file('/tmp/dest_dir/testdir/nested').with({
+                'ensure' => 'directory',
+                'owner' => 'root',
+                'group'  => 'root',
+            })
+        end
+
+    end
+    context 'testdir should have_index.conf file' do
+        let(:title) { 'example_test' }
+        let(:facts) { { 
+            :fqdn => 'testhost.localdomain',
+            :custom_fake_fact => 'this_is_fake'
+        } }
+        let(:params) {
+            {   
+                :source_dir => 'recursive_directory',
+                :dest_dir => '/tmp/dest_dir',
+                :owner => 'root',
+                :group => 'root',
+                :file_mode  => '0600'
+            }
+        }
+
+        it do
+            should contain_file('/tmp/dest_dir/testdir/nested/index.conf').with({
+                'ensure' => 'file',
+                'owner' => 'root',
+                'group'  => 'root',
+                'mode'  => '0600',
+            }).with_content("testhost.localdomain\n")
+        end
+
+    end
 end
