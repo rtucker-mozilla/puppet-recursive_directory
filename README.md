@@ -43,6 +43,11 @@ parameter documentation
 >**required: false**  
 >**defaut: 0600**
     
+**dir_mode**  
+
+>The file mode for all of the directories
+>**required: false**  
+>**defaut: 0700**
 **owner**
    
 >The owner of the file  
