@@ -88,7 +88,7 @@ module Puppet::Parser::Functions
             if file_mode
                 creatable_resources[destination_full_path]['mode'] = file_mode
             end
-        elsif f != '.' and f != '..'
+        elsif File.directory?("#{file_path}/#{f}") and f != '.' and f != '..'
             title = f
             destination_full_path = "#{destination_dir}/#{title}"
             creatable_resources[destination_full_path] = {
