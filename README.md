@@ -20,4 +20,9 @@ recursive_directory {'some_unique_title':
 ```
 > This will copy all files from <module_path>custom_module/templates/source_dir folder
 > and interpolate variables the same as when using the template() function inside of the
-> manifest itself
+> manifest itself and put them into /tmp
+
+testing
+=======
+
+rake spec in the root checkout of the module
