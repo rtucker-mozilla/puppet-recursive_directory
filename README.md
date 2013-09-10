@@ -22,6 +22,39 @@ recursive_directory {'some_unique_title':
 > and interpolate variables the same as when using the template() function inside of the
 > manifest itself and put them into /tmp
 
+parameter documentation
+=======================
+**source_dir**  
+
+>The module_name followed by a subfolder inside of <module_name>/templates
+>If source_dir is simply the modulename, recursive_directory will interpolate and
+>create file resources for all files in <module_name>  
+>**required: true**
+    
+**final_dir**  
+
+>The fully qualified path on the client system where the interpolated templates and files
+>should be created  
+>**required: true**
+    
+**file_mode**  
+
+>The file mode for all of the files  
+>**required: false**  
+>**defaut: 0600**
+    
+**owner**
+   
+>The owner of the file  
+>**required: false**  
+>**default: 'nobody'**
+    
+**group**
+   
+>The owner of the file  
+>**required: false**  
+>**default: 'nobody'**
+
 testing
 =======
 
