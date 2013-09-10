@@ -7,7 +7,7 @@ describe 'recursive_directory' do
         let(:params) {
             {   
                 :source_dir => 'recursive_directory',
-                :final_dir => '/tmp/dest_dir',
+                :dest_dir => '/tmp/dest_dir',
             }
         }
 
@@ -28,7 +28,7 @@ describe 'recursive_directory' do
         let(:params) {
             {   
                 :source_dir => 'recursive_directory',
-                :final_dir => '/tmp/dest_dir',
+                :dest_dir => '/tmp/dest_dir',
                 :file_mode => '0711',
             }
         }
@@ -50,7 +50,7 @@ describe 'recursive_directory' do
         let(:params) {
             {   
                 :source_dir => 'recursive_directory',
-                :final_dir => '/tmp/dest_dir',
+                :dest_dir => '/tmp/dest_dir',
                 :owner => 'root',
             }
         }
@@ -72,7 +72,7 @@ describe 'recursive_directory' do
         let(:params) {
             {   
                 :source_dir => 'recursive_directory',
-                :final_dir => '/tmp/dest_dir',
+                :dest_dir => '/tmp/dest_dir',
                 :group => 'root',
             }
         }
@@ -97,7 +97,7 @@ describe 'recursive_directory' do
         let(:params) {
             {   
                 :source_dir => 'recursive_directory',
-                :final_dir => '/tmp/dest_dir',
+                :dest_dir => '/tmp/dest_dir',
                 :group => 'root',
             }
         }
