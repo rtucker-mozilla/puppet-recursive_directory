@@ -176,7 +176,8 @@ describe 'recursive_directory' do
                 :dest_dir => '/tmp/dest_dir',
                 :owner => 'root',
                 :group => 'root',
-                :file_mode  => '0600'
+                :file_mode  => '0600',
+                :dir_mode  => '0755'
             }
         }
 
@@ -185,6 +186,7 @@ describe 'recursive_directory' do
                 'ensure' => 'directory',
                 'owner' => 'root',
                 'group'  => 'root',
+                'mode'   => '0755'
             })
         end
 

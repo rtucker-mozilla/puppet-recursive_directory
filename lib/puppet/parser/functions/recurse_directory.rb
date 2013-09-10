@@ -37,6 +37,7 @@ module Puppet::Parser::Functions
     end
     file_owner = args[3]
     file_group = args[4]
+    dir_mode = args[5]
     creatable_resources = Hash.new
     source_dir_array = source_dir.split(/\//)
     template_path = source_dir_array[0]
@@ -95,6 +96,9 @@ module Puppet::Parser::Functions
                 'owner' => file_owner,
                 'group' => file_group,
             }
+            if dir_mode
+                creatable_resources[destination_full_path]['mode'] = dir_mode
+            end
         end
 
     end
