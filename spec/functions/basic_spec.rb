@@ -30,8 +30,6 @@ describe 'recurse_directory' do
             {
                 "ensure" => "file",
                 "content" => "\n",
-                "owner"   => 'nobody',
-                "group"   => 'nobody',
                 "mode"   => '0600'
             }
     }) }

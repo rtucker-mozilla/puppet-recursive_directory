@@ -21,12 +21,12 @@ module Puppet::Parser::Functions
     # args[3]
     # - The owner of the file
     # - required: false
-    # - default: nobody
+    # - default: owner of puppet running process
     #
     # args[4]
     # - The group ownership of the file
     # - required: false
-    # - default: nobody
+    # - default: owner of puppet running process
     #
     newfunction(:recurse_directory, :type => :rvalue) do |args|
     source_dir = args[0]
@@ -36,13 +36,7 @@ module Puppet::Parser::Functions
         file_mode = '0600'
     end
     file_owner = args[3]
-    if not file_owner
-        file_owner = 'nobody'
-    end
     file_group = args[4]
-    if not file_group
-        file_group = 'nobody'
-    end
     creatable_resources = Hash.new
     source_dir_array = source_dir.split(/\//)
     template_path = source_dir_array[0]
@@ -83,9 +77,13 @@ module Puppet::Parser::Functions
             creatable_resources[destination_full_path] = {
                 'ensure' => ensure_mode,
                 'content' => template_content,
-                'owner' => file_owner,
-                'group' => file_group,
             }
+            if file_owner
+                creatable_resources[destination_full_path]['owner'] = file_owner
+            end
+            if file_group
+                creatable_resources[destination_full_path]['group'] = file_group
+            end
             if file_mode
                 creatable_resources[destination_full_path]['mode'] = file_mode
             end
