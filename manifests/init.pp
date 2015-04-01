@@ -47,11 +47,11 @@
 #
 define recursive_directory (
     $source_dir = undef,
-    $dest_dir = undef,
-    $file_mode = undef,
-    $owner = 'nobody',
-    $group = 'nobody',
-    $dir_mode = undef
+    $dest_dir   = undef,
+    $file_mode  = '0600',
+    $owner      = 'nobody',
+    $group      = 'nobody',
+    $dir_mode   = '0700'
 ){
     if $source_dir and $dest_dir {
         $resources_to_create = recurse_directory(
@@ -67,5 +67,6 @@ define recursive_directory (
     } else {
         fail("source_dir and dest_dir are required")
     }
+
 
 }
