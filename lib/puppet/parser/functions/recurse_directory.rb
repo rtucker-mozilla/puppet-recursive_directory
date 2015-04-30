@@ -27,6 +27,16 @@ module Puppet::Parser::Functions
     # - required: false
     # - default: owner of puppet running process
     #
+    # args[5]
+    # - The directory mode
+    # - required: false
+    # - default: 0700
+    #
+    # args[6]
+    # - Flag used to merge only erb templates.
+    # - required: false
+    # - default: false
+    #
 
     newfunction(:recurse_directory, :type => :rvalue) do |args|
     source_dir      = args[0]
@@ -35,6 +45,7 @@ module Puppet::Parser::Functions
     file_owner      = args[3]
     file_group      = args[4]
     dir_mode        = args[5]
+    merge_erb_only  = args[6]
 
 
     file_path       = Puppet::Parser::Files.find_template(source_dir, compiler.environment)
@@ -61,27 +72,40 @@ module Puppet::Parser::Functions
           debug("Title in loop #{title}")
           destination_full_path = "#{destination_dir}/#{title}"
           file = "#{file_path}/#{f}"
-          debug "Retrieving template #{file}"
-  
-          wrapper = Puppet::Parser::TemplateWrapper.new(self)
-          wrapper.file = file
-          begin
-            wrapper.result
-          rescue => detail
-            info = detail.backtrace.first.split(':')
-          raise Puppet::ParseError,
-              "Failed to parse template #{file}:\n  Filepath: #{info[0]}\n  Line: #{info[1]}\n  Detail: #{detail}\n"
-          end
-          template_content = wrapper.result
 
-          creatable_resources[destination_full_path] = {
-              'ensure'  => 'file',
-              'content' => template_content,
-              'mode'    => file_mode,
-              'owner'   => file_owner,
-              'group'   => file_group
-          }
-          debug("Resource: #{destination_full_path} #{file_mode}")
+          if merge_erb_only and title == f
+            # The file is not a template (ie : not erb file).
+            creatable_resources[destination_full_path] = {
+                'ensure'  => 'file',
+                'source'  => file,
+                'mode'    => file_mode,
+                'owner'   => file_owner,
+                'group'   => file_group
+            }
+          else
+            # The file is a template
+            debug "Retrieving template #{file}"
+
+            wrapper = Puppet::Parser::TemplateWrapper.new(self)
+            wrapper.file = file
+            begin
+              wrapper.result
+            rescue => detail
+              info = detail.backtrace.first.split(':')
+            raise Puppet::ParseError,
+                "Failed to parse template #{file}:\n  Filepath: #{info[0]}\n  Line: #{info[1]}\n  Detail: #{detail}\n"
+            end
+            template_content = wrapper.result
+
+            creatable_resources[destination_full_path] = {
+                'ensure'  => 'file',
+                'content' => template_content,
+                'mode'    => file_mode,
+                'owner'   => file_owner,
+                'group'   => file_group
+            }
+            debug("Resource: #{destination_full_path} #{file_mode}")
+          end
 
         elsif File.directory?("#{file_path}/#{f}") and f != '.' and f != '..'
 
