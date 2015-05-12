@@ -55,7 +55,7 @@ define recursive_directory (
     $merge_erb_only = false,
 ){
     if $source_dir and $dest_dir {
-        $resources_to_create = recurse_directory(
+        $created_resources = recurse_directory(
             $source_dir,
             $dest_dir,
             $file_mode,
@@ -64,8 +64,6 @@ define recursive_directory (
             $dir_mode,
             $merge_erb_only
             )
-        notice($resources_to_create)
-        create_resources('file', $resources_to_create)
     } else {
         fail("source_dir and dest_dir are required")
     }
