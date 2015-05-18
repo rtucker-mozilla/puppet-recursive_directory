@@ -46,24 +46,24 @@
 # Copyright 2013 Rob Tucker here, unless otherwise noted.
 #
 define recursive_directory (
-    $source_dir = undef,
-    $dest_dir   = undef,
-    $file_mode  = '0600',
-    $owner      = 'nobody',
-    $group      = 'nobody',
-    $dir_mode   = '0700'
+    $source_dir     = undef,
+    $dest_dir       = undef,
+    $file_mode      = '0600',
+    $owner          = 'nobody',
+    $group          = 'nobody',
+    $dir_mode       = '0700',
+    $merge_erb_only = false,
 ){
     if $source_dir and $dest_dir {
-        $resources_to_create = recurse_directory(
+        $created_resources = recurse_directory(
             $source_dir,
             $dest_dir,
             $file_mode,
             $owner,
             $group,
-            $dir_mode
+            $dir_mode,
+            $merge_erb_only
             )
-        notice($resources_to_create)
-        create_resources('file', $resources_to_create)
     } else {
         fail("source_dir and dest_dir are required")
     }
