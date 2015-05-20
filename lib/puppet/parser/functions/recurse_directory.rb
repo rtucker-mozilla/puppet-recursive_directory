@@ -128,7 +128,6 @@ module Puppet::Parser::Functions
     debug("Source Dir #{source_dir}")
     debug("Destination Dir #{destination_dir}")
     debug("File Path #{file_path}")
-    debug("Creatable Resources #{creatable_resources}")
 
     return created_resources
   end
